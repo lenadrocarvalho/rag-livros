@@ -1,0 +1,4 @@
+chromadb>=0.5
+sentence-transformers>=3.0
+pymupdf>=1.24      # extração de PDF (licença AGPL)
+mcp>=2.0

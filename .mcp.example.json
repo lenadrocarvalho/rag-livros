@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "biblioteca": {
+      "command": ".venv/Scripts/python.exe",
+      "args": ["mcp_server.py"],
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "HF_HUB_OFFLINE": "1",
+        "TRANSFORMERS_VERBOSITY": "error"
+      }
+    }
+  }
+}

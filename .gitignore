@@ -1,0 +1,20 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Índice local (regerado por ingest.py) e livros-fonte
+chroma_db/
+livros/
+/*.pdf
+/*.txt
+!requirements.txt
+
+# Config local do MCP (tem caminhos da sua máquina) — use .mcp.example.json
+.mcp.json
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

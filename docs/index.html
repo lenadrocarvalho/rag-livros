@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marginália — pergunte aos clássicos</title>
+  <meta name="description" content="Busca em clássicos da literatura em português que responde só com citações verificáveis: livro, página e trecho original. Nada inventado.">
+  <meta name="theme-color" content="#F5F3EE" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161513" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232E2B26'/%3E%3Cpath d='M9 8v16M13 8h10M13 13h10M13 18h7' stroke='%23F5F3EE' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="pular" href="#pergunta">Ir para a busca</a>
+
+  <header class="topo">
+    <div class="topo__marca">
+      <svg class="topo__logo" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7"/><path d="M9 8v16M13 8h10M13 13h10M13 18h7"/></svg>
+      <span>Marginália</span>
+    </div>
+    <nav class="topo__nav">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="https://github.com/" id="link-github" rel="noopener">Código</a>
+      <button class="icone" id="tema" type="button" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="titulo">
+      <p class="hero__sobre">Clássicos em português · busca com evidências</p>
+      <h1 id="titulo">Pergunte aos livros.<br><em>Receba só o que está escrito.</em></h1>
+      <p class="hero__lead">Cada resposta é uma citação do texto original, com livro e página.
+        Quando os livros não dizem algo, a Marginália diz isso em vez de inventar.</p>
+
+      <form class="busca" id="form" role="search" autocomplete="off">
+        <label class="sr" for="pergunta">Sua pergunta</label>
+        <svg class="busca__lupa" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="pergunta" name="q" type="search" placeholder="Ex.: como eram os olhos de Capitu?" enterkeyhint="search" disabled>
+        <kbd class="busca__atalho" aria-hidden="true">/</kbd>
+        <button class="busca__ir" type="submit" disabled>Buscar</button>
+      </form>
+
+      <div class="controles">
+        <div class="modo" role="radiogroup" aria-label="Tipo de busca">
+          <button type="button" role="radio" data-modo="palavras" aria-checked="true">
+            <strong>Palavras</strong><span>instantâneo</span>
+          </button>
+          <button type="button" role="radio" data-modo="sentido" aria-checked="false">
+            <strong>Sentido</strong><span>IA no navegador</span>
+          </button>
+        </div>
+        <p class="modo__status" id="modo-status" aria-live="polite"></p>
+      </div>
+      <div class="progresso" id="progresso" hidden><div class="progresso__barra" id="progresso-barra"></div></div>
+
+      <div class="exemplos" id="exemplos" aria-label="Exemplos de perguntas"></div>
+    </section>
+
+    <section class="estante" id="estante" aria-label="Livros">
+      <div class="estante__cabeca">
+        <h2>Estante</h2>
+        <p id="estante-resumo">Abrindo os livros…</p>
+      </div>
+      <div class="estante__livros" id="livros"></div>
+    </section>
+
+    <section class="resultados" id="resultados" aria-live="polite" hidden>
+      <div class="veredito" id="veredito"></div>
+      <div class="mapa" id="mapa" aria-label="Onde os trechos aparecem em cada livro"></div>
+      <ol class="cartoes" id="cartoes"></ol>
+    </section>
+
+    <section class="como" id="como-funciona" aria-labelledby="como-titulo">
+      <h2 id="como-titulo">Como a Marginália evita inventar</h2>
+      <ol class="passos">
+        <li>
+          <span class="passos__n">1</span>
+          <h3>Trechos, não resumos</h3>
+          <p>Os livros são divididos em trechos de cerca de mil caracteres, com a página de origem.
+            O que você lê na tela é sempre o texto original.</p>
+        </li>
+        <li>
+          <span class="passos__n">2</span>
+          <h3>Duas buscas, um ranking</h3>
+          <p><b>Palavras</b> (BM25) acha nomes e frases exatas. <b>Sentido</b> (embeddings) entende
+            paráfrases. As duas listas são fundidas por <i>Reciprocal Rank Fusion</i>.</p>
+        </li>
+        <li>
+          <span class="passos__n">3</span>
+          <h3>Filtro de evidência</h3>
+          <p>Um trecho só aparece se for parecido o bastante com a pergunta ou se contiver os
+            termos dela. Se nada passa, a resposta é: <q>os livros não dizem isso</q>.</p>
+        </li>
+      </ol>
+      <p class="como__nota">Tudo roda no seu navegador: nenhuma pergunta sai da sua máquina.
+        O modo <b>Sentido</b> baixa uma vez o modelo <code>paraphrase-multilingual-MiniLM-L12-v2</code>
+        (118 MB, fica em cache). O mesmo índice também pode ser usado por um assistente de IA via MCP —
+        veja o README no repositório.</p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Textos em domínio público. Feito com Chroma, sentence-transformers e transformers.js.</p>
+  </footer>
+
+  <template id="tpl-cartao">
+    <li class="cartao">
+      <header class="cartao__cabeca">
+        <span class="cartao__ponto" aria-hidden="true"></span>
+        <span class="cartao__livro"></span>
+        <span class="cartao__pagina"></span>
+      </header>
+      <div class="cartao__contexto cartao__contexto--antes" hidden></div>
+      <blockquote class="cartao__texto"></blockquote>
+      <div class="cartao__contexto cartao__contexto--depois" hidden></div>
+      <footer class="cartao__pe">
+        <div class="cartao__sinais"></div>
+        <div class="cartao__acoes">
+          <button type="button" class="botao" data-acao="contexto" aria-expanded="false">Ler ao redor</button>
+          <button type="button" class="botao" data-acao="citar">Copiar citação</button>
+        </div>
+      </footer>
+    </li>
+  </template>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
